@@ -12,10 +12,6 @@ class NeuralNetwork():
     def __init__(self):
         self.layers = []
         
-
-    def create(self):
-        pass
-
     def free(self):
         pass
 
@@ -37,10 +33,6 @@ class Layer():
     def __init__(self):
         self.neurons = []
         
-
-    def create(self):
-        pass
-
     def free(self):
         pass
 

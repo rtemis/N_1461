@@ -1,13 +1,16 @@
 class Neuron():
 
-    def __init__(self, umbral, typeN, active=0.0, inactive=0.0):
+    def __init__(self, umbral, typeN, active=None, inactive=None):
         # Threshold for activation
         self.umbral = umbral 
         
         # Determinates for 
-        self.output_active = active 
-        self.output_inactive = inactive 
-
+        if active == None and inactive == None:
+            self.output_active = 0.0 
+            self.output_inactive = 0.0 
+        else:
+            self.output_active = active
+            self.output_inactive = inactive
         # ?
         self.type = typeN
 
@@ -17,13 +20,6 @@ class Neuron():
 
         self.connections = []
 
-    def create(self, umbral, typeN, active=None, inactive=None):
-        if active == None and inactive == None:
-            self.__init__(umbral=umbral, typeN=typeN)
-        else:
-            self.__init__(umbral=umbral, typeN=typeN, active=active, inactive=inactive)
-        return  
-
     def free(self):
         pass
 
@@ -31,8 +27,8 @@ class Neuron():
         self.value = val
         return 
 
-    def connect(self, neuron):
-        self.connections.append(neuron)
+    def connect(self, neuron, weight):
+        self.connections.append(Connection(weight=weight, neuron=neuron))
         return
     
     def fire(self):
@@ -51,9 +47,7 @@ class Connection():
         self.neurons = []
 
     def free(self):
-        for i in self.neurons:
-            i.free
-        return
+        pass
 
     def propagate(self):
         pass 
