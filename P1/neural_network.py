@@ -14,7 +14,8 @@ class NeuralNetwork():
         pass
 
     def initialize(self):
-        pass
+        for layer in self.layers:
+            layer.initialize()
 
     def add_layer(self, layer):
         self.layers.append(layer)         
@@ -38,7 +39,8 @@ class Layer():
         pass
 
     def initialize(self):
-        pass
+        for neuron in self.neurons:
+            neuron.initialize(0)
 
     def add_neuron(self, neuron):
         self.neurons.append(neuron)
@@ -49,12 +51,11 @@ class Layer():
     def fire(self):
         for neuron in self.neurons:
             neuron.fire()
-        self.propagate()
 
     def propagate(self):
         for neuron in self.neurons:
             neuron.propagate()
-        return 
+         
 
 
 class Perceptron(NeuralNetwork):

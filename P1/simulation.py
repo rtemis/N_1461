@@ -7,8 +7,10 @@ from neuron import Neuron, Connection
 class Data():
 
     def __init__(self):
-        self.train = []
-        self.test = []
+        self.train_in = []
+        self.train_out = []
+        self.test_in = []
+        self.test_out = []
 
     def load_data_proportional(self, filename, prop=0.7):
 
@@ -16,24 +18,76 @@ class Data():
         data = file.readlines()
         file.close()
 
+        config = data[0].split(' ')
+        attributes = config[0]
+        classes = config[1]
+        
+        data = data[1:]
+
         random.shuffle(data)
 
         length = len(data)
         threshold = length * prop
 
         for i in range(threshold):
-            self.train.append(data[i])
+            self.train_in.append(data[i][0:attributes])
+            self.train_out.append(data[i][attributes:])
         
         for i in range(threshold, length):
-            self.test.append(data[i])
-            
-        return 
+            self.test_in.append(data[i][0:attributes])
+            self.test_out.append(data[i][attributes:])
+
+        return self.train_in, self.train_out, self.test_in, self.test_out
 
     def load_data_file(self, filename):
-        pass
+
+        file = open(filename, "r")
+        data = file.readlines()
+        file.close()
+
+        config = data[0].split(' ')
+        attributes = config[0]
+        classes = config[1]
+        
+        data = data[1:]
+
+        data_in = []
+        data_out = []
+
+        for line in data:
+            data_in.append(line[0:attributes])
+            data_out.append(lince[attributes:])
+
+        return data_in, data_out
 
     def load_data_files(self, file_train, file_test):
-        pass
+        file = open(file_train, "r")
+        data1 = file.readlines()
+        file.close()
+        
+        config = data1[0].split(' ')
+        attributes = config[0]
+        classes = config[1]
+        
+        data1 = data1[1:]
+
+        for i in data1:
+            self.train_in.append(data1[i][0:attributes])
+            self.train_out.append(data1[i][attributes:])
+        
+        file = open(file_train, "r")
+        data2 = file.readlines()
+        file.close()
+        
+        config = data2[0].split(' ')
+        attributes = config[0]
+        classes = config[1]
+
+        for i in data2
+            self.test_in.append(data2[i][0:attributes])
+            self.test_out.append(data2[i][attributes:])
+
+        return self.train_in, self.train_out, self.test_in, self.test_out
 
 
 
@@ -61,10 +115,6 @@ def main():
     a13.connect(y, 2)
     a23.connect(y, 2)
 
-    x_1.initialize(1)
-    x_2.initialize(1)
-    x_3.initialize(1)
-
     layer_and = Layer()
     layer_and.add_neuron(x_1)
     layer_and.add_neuron(x_2)
@@ -83,13 +133,29 @@ def main():
     network.add_layer(layer_or)
     network.add_layer(layer_f)
 
-    network.fire()
-    print(a12.value)
-    print(a13.value)
-    print(a23.value)
+    data = [[0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1], [1, 0, 0], [1, 0, 1]]
 
-    print(y.f_x)
-    print(y.value)
+    for d in data:
+        x_1.initialize(d[0])
+        x_2.initialize(d[1])
+        x_3.initialize(d[2])
+
+        network.fire()
+        network.initialize()
+        network.propagate()
+        print(d, a12.f_x, a13.f_x, a23.f_x, y.f_x)
+
+    network.initialize()
+    network.fire()
+    network.initialize()
+    network.propagate()
+    print(d, a12.f_x, a13.f_x, a23.f_x, y.f_x)
+
+    network.initialize()
+    network.fire()
+    network.initialize()
+    network.propagate()
+    print(d, a12.f_x, a13.f_x, a23.f_x, y.f_x)
 
 if __name__ == "__main__":
     main()
