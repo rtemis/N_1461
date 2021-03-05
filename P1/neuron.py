@@ -34,11 +34,11 @@ class Neuron():
     def initialize(self, val):
         # Sets the neuron value 
         self.value = val
-        return 
+         
 
     def connect(self, neuron, weight):
         self.connections.append(Connection(weight=weight, neuron=neuron))
-        return
+        
     
     def fire(self):
         # Typical input neurons 0 or 1
@@ -58,13 +58,12 @@ class Neuron():
         for cxn in self.connections:
             cxn.propagate(self.f_x)
         
-        return
 
     def propagate(self):
         for cxn in self.connections:
             cxn.neuron.value += cxn.weight * cxn.val_received
 
-        return
+        
 
 
 class Connection():
@@ -80,7 +79,6 @@ class Connection():
 
     def propagate(self, f_x):
         self.val_received = f_x
-        return
 
 
 

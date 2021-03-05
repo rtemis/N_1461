@@ -12,6 +12,12 @@ class Data():
         self.test_in = []
         self.test_out = []
 
+        self.attributes = 0
+        self.classes = 0        
+        
+        self.attributes_test = 0
+        self.classes_test = 0
+
     def load_data_proportional(self, filename, prop=0.7):
 
         file = open(filename, "r")
@@ -19,8 +25,8 @@ class Data():
         file.close()
 
         config = data[0].split(' ')
-        attributes = config[0]
-        classes = config[1]
+        self.attributes = config[0]
+        self.classes = config[1]
         
         data = data[1:]
 
@@ -46,19 +52,18 @@ class Data():
         file.close()
 
         config = data[0].split(' ')
-        attributes = config[0]
-        classes = config[1]
+        self.attributes = config[0]
+        self.classes = config[1]
         
         data = data[1:]
 
-        data_in = []
-        data_out = []
-
         for line in data:
-            data_in.append(line[0:attributes])
-            data_out.append(lince[attributes:])
+            self.train_in.append(line[0:attributes])
+            self.test_in.append(line[0:attributes])
+            self.train_out.append(line[attributes:])
+            self.test_out.append(line[attributes:])
 
-        return data_in, data_out
+        return self.train_in, self.train_out
 
     def load_data_files(self, file_train, file_test):
         file = open(file_train, "r")
@@ -66,8 +71,8 @@ class Data():
         file.close()
         
         config = data1[0].split(' ')
-        attributes = config[0]
-        classes = config[1]
+        self.attributes = config[0]
+        self.classes = config[1]
         
         data1 = data1[1:]
 
@@ -80,8 +85,8 @@ class Data():
         file.close()
         
         config = data2[0].split(' ')
-        attributes = config[0]
-        classes = config[1]
+        self.attributes_test = config[0]
+        self.classes_test = config[1]
 
         for i in data2
             self.test_in.append(data2[i][0:attributes])
@@ -91,7 +96,7 @@ class Data():
 
 
 
-def main():
+def simulation_test():
     x_1 = Neuron(0, "Directa")
     x_2 = Neuron(0, "Directa")
     x_3 = Neuron(0, "Directa")
@@ -156,8 +161,3 @@ def main():
     network.initialize()
     network.propagate()
     print(d, a12.f_x, a13.f_x, a23.f_x, y.f_x)
-
-if __name__ == "__main__":
-    main()
-
-
