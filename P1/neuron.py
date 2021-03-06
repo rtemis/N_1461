@@ -27,6 +27,7 @@ class Neuron():
         self.f_x = 0.0
         # List of connections with the neuron
         self.connections = []
+        self.inputs = []
 
     def free(self):
         pass
@@ -36,8 +37,10 @@ class Neuron():
         self.value = val
          
 
-    def connect(self, neuron, weight):
-        self.connections.append(Connection(weight=weight, neuron=neuron))
+    def connect(self, output, weight):
+        c = Connection(weight=weight, input=self, output=output)
+        self.connections.append(c)
+        output.inputs.append(c)
         
     
     def fire(self):
@@ -61,18 +64,19 @@ class Neuron():
 
     def propagate(self):
         for cxn in self.connections:
-            cxn.neuron.value += cxn.weight * cxn.val_received
+            cxn.output.value += cxn.weight * cxn.val_received
 
         
 
 
 class Connection():
 
-    def __init__(self, weight, neuron):
+    def __init__(self, weight, input, output):
         self.weight = weight
         self.w_prev = 0.0
         self.val_received = 0.0
-        self.neuron = neuron
+        self.output = output
+        self.input = input
 
     def free(self):
         pass

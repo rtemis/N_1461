@@ -88,7 +88,7 @@ class Data():
         self.attributes_test = config[0]
         self.classes_test = config[1]
 
-        for i in data2
+        for i in data2:
             self.test_in.append(data2[i][0:attributes])
             self.test_out.append(data2[i][attributes:])
 
@@ -96,7 +96,7 @@ class Data():
 
 
 
-def simulation_test():
+def main():
     x_1 = Neuron(0, "Directa")
     x_2 = Neuron(0, "Directa")
     x_3 = Neuron(0, "Directa")
@@ -161,3 +161,5 @@ def simulation_test():
     network.initialize()
     network.propagate()
     print(d, a12.f_x, a13.f_x, a23.f_x, y.f_x)
+
+main()

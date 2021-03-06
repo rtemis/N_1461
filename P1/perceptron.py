@@ -29,7 +29,6 @@ def perceptron():
         for n in layer_out.neurons:
             m.connect(n, 1)
 
-
     network = NeuralNetwork()
     network.add_layer(layer_in)
     network.add_layer(layer_out)
@@ -45,18 +44,11 @@ def perceptron():
             network.initialize()
             network.propagate()
 
-            # Calculate the f_x 
-            y_in = layer_in.neurons[-1].f_x
-
-            for m in layer_in.neurons:
-                for c in m.connections:
-                    y_in += m.f_x * c.weight
-                    c.w_prev = c.weight 
-
-                if y_in != t:
-                    c.weight = alfa * t * xi
-                    bias += alfa * t 
-                    flag = True
+            for y , ti in itertools.zip(network.layers[-1], t):
+                if y.value != ti:
+                    for c in y.inputs: 
+                        c.weight += alfa * ti * c.input.f_x
+                        flag = True
 
     return 
 
