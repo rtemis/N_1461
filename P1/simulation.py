@@ -3,6 +3,8 @@ import random
 
 from neural_network import NeuralNetwork, Layer
 from neuron import Neuron, Connection
+from perceptron import perceptron
+from adaline import adaline
 
 class Data():
 
@@ -24,24 +26,28 @@ class Data():
         data = file.readlines()
         file.close()
 
-        config = data[0].split(' ')
-        self.attributes = config[0]
-        self.classes = config[1]
+        config = data[0].split()
+        self.attributes = int(config[0])
+        self.classes = int(config[1])
         
         data = data[1:]
+        #random.shuffle(data)
 
-        random.shuffle(data)
+        ls_in = []
+        ls_out = []
+        for i in data:
+            line = [float(x) for x in i.split()]
+            ls_in.append(line[:self.attributes])
+            ls_out.append(line[self.attributes:])
 
         length = len(data)
-        threshold = length * prop
+        threshold = int(length * prop)
 
-        for i in range(threshold):
-            self.train_in.append(data[i][0:attributes])
-            self.train_out.append(data[i][attributes:])
+        self.train_in = ls_in[:threshold]
+        self.train_out = ls_out[:threshold]      
         
-        for i in range(threshold, length):
-            self.test_in.append(data[i][0:attributes])
-            self.test_out.append(data[i][attributes:])
+        self.test_in = ls_in[threshold:]
+        self.test_out = ls_out[threshold:]
 
         return self.train_in, self.train_out, self.test_in, self.test_out
 
@@ -51,52 +57,58 @@ class Data():
         data = file.readlines()
         file.close()
 
-        config = data[0].split(' ')
-        self.attributes = config[0]
-        self.classes = config[1]
+        config = data[0].split()
+        self.attributes = int(config[0])
+        self.classes = int(config[1])
         
         data = data[1:]
+        #random.shuffle(data)
 
-        for line in data:
-            self.train_in.append(line[0:attributes])
-            self.test_in.append(line[0:attributes])
-            self.train_out.append(line[attributes:])
-            self.test_out.append(line[attributes:])
+        for i in data:
+            line = [float(x) for x in i.split()]
+            self.train_in.append(line[:self.attributes])
+            self.train_out.append(line[self.attributes:])
 
         return self.train_in, self.train_out
 
     def load_data_files(self, file_train, file_test):
         file = open(file_train, "r")
-        data1 = file.readlines()
+        data = file.readlines()
         file.close()
         
-        config = data1[0].split(' ')
+        config = data[0].split()
         self.attributes = config[0]
         self.classes = config[1]
         
-        data1 = data1[1:]
+        data = data[1:]
+        random.shuffle(data)
 
-        for i in data1:
-            self.train_in.append(data1[i][0:attributes])
-            self.train_out.append(data1[i][attributes:])
+        for i in data:
+            line = [float(x) for x in i.split()]
+            self.train_in.append(line[:self.attributes])
+            self.train_out.append(line[self.attributes:])
         
         file = open(file_train, "r")
-        data2 = file.readlines()
+        data = file.readlines()
         file.close()
         
-        config = data2[0].split(' ')
-        self.attributes_test = config[0]
-        self.classes_test = config[1]
+        config = data[0].split()
+        if self.attributes != config[0] or self.classes != config[1]:
+            raise Exception('Files of different sizes')
 
-        for i in data2:
-            self.test_in.append(data2[i][0:attributes])
-            self.test_out.append(data2[i][attributes:])
+        data = data[1:]
+        random.shuffle(data)
+
+        for i in data:
+            line = [float(x) for x in i.split()]
+            self.test_in.append(line[:self.attributes])
+            self.test_out.append(line[self.attributes:])
 
         return self.train_in, self.train_out, self.test_in, self.test_out
 
 
 
-def main():
+def mcculloch():
     x_1 = Neuron(0, "Directa")
     x_2 = Neuron(0, "Directa")
     x_3 = Neuron(0, "Directa")
@@ -161,5 +173,15 @@ def main():
     network.initialize()
     network.propagate()
     print(d, a12.f_x, a13.f_x, a23.f_x, y.f_x)
+
+
+def main():
+    data = Data()
+
+    tr_in, tr_out = data.load_data_file('data/problema_real1.txt')
+
+    net = perceptron(tr_in, tr_out, tr_in, tr_out, data.attributes, data.classes)
+
+    net.print_network()
 
 main()
