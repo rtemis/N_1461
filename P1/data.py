@@ -1,11 +1,6 @@
 import os
 import random
 
-from neural_network import NeuralNetwork, Layer
-from neuron import Neuron, Connection
-from perceptron import perceptron
-from adaline import adaline
-
 class Data():
 
     def __init__(self):
@@ -105,83 +100,3 @@ class Data():
             self.test_out.append(line[self.attributes:])
 
         return self.train_in, self.train_out, self.test_in, self.test_out
-
-
-
-def mcculloch():
-    x_1 = Neuron(0, "Directa")
-    x_2 = Neuron(0, "Directa")
-    x_3 = Neuron(0, "Directa")
-
-    a12 = Neuron(2, "McCulloch", active=1, inactive=0)
-    a13 = Neuron(2, "McCulloch", active=1, inactive=0)
-    a23 = Neuron(2, "McCulloch", active=1, inactive=0)
-
-    y = Neuron(2, "McCulloch", active=1, inactive=0)
-
-    x_1.connect(a12, 1)
-    x_2.connect(a12, 1)
-
-    x_1.connect(a13, 1)
-    x_3.connect(a13, 1)
-
-    x_2.connect(a23, 1)
-    x_3.connect(a23, 1)
-
-    a12.connect(y, 2)
-    a13.connect(y, 2)
-    a23.connect(y, 2)
-
-    layer_and = Layer()
-    layer_and.add_neuron(x_1)
-    layer_and.add_neuron(x_2)
-    layer_and.add_neuron(x_3)
-
-    layer_or = Layer()
-    layer_or.add_neuron(a12)
-    layer_or.add_neuron(a13)
-    layer_or.add_neuron(a23)
-
-    layer_f = Layer()
-    layer_f.add_neuron(y)
-
-    network = NeuralNetwork()
-    network.add_layer(layer_and)
-    network.add_layer(layer_or)
-    network.add_layer(layer_f)
-
-    data = [[0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1], [1, 0, 0], [1, 0, 1]]
-
-    for d in data:
-        x_1.initialize(d[0])
-        x_2.initialize(d[1])
-        x_3.initialize(d[2])
-
-        network.fire()
-        network.initialize()
-        network.propagate()
-        print(d, a12.f_x, a13.f_x, a23.f_x, y.f_x)
-
-    network.initialize()
-    network.fire()
-    network.initialize()
-    network.propagate()
-    print(d, a12.f_x, a13.f_x, a23.f_x, y.f_x)
-
-    network.initialize()
-    network.fire()
-    network.initialize()
-    network.propagate()
-    print(d, a12.f_x, a13.f_x, a23.f_x, y.f_x)
-
-
-def main():
-    data = Data()
-
-    tr_in, tr_out = data.load_data_file('data/problema_real1.txt')
-
-    net = perceptron(tr_in, tr_out, tr_in, tr_out, data.attributes, data.classes)
-
-    net.print_network()
-
-main()
