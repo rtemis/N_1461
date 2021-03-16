@@ -72,8 +72,8 @@ class Data():
         file.close()
         
         config = data[0].split()
-        self.attributes = config[0]
-        self.classes = config[1]
+        self.attributes = int(config[0])
+        self.classes = int(config[1])
         
         data = data[1:]
         random.shuffle(data)
@@ -88,7 +88,7 @@ class Data():
         file.close()
         
         config = data[0].split()
-        if self.attributes != config[0] or self.classes != config[1]:
+        if self.attributes != int(config[0]) or self.classes != int(config[1]):
             raise Exception('Files of different sizes')
 
         data = data[1:]

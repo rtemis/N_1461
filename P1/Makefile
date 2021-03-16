@@ -30,29 +30,39 @@ compilar:
 ayuda_per:
 	@echo "----------------------------------------------------"
 	@echo "HELP Neural Network - Perceptron"
-	@echo "	--alpha		<value>		Value between 0.0 and 1.0"
-	@echo "	--umbral	<value> 	Value between 0.0 and 1.0"
-	@echo "	--prop 		<value>		Value between 0.0 and 1.0"
-	@echo "	--tolerance	<value> 	Value between 0.0 and 1.0"
-	@echo "	--patience 	<value>		Integer value max iterations"
-	@echo "	--train <file> 	Training file name"
-	@echo "	--test <file> 	Testing file name"
+	@echo "	data=<value>		Value 1, 2, or 3, mode in which file is read	default=1"
+	@echo "	alpha=<value>		Value between 0.0 and 1.0	default=1"
+	@echo "	umbral=<value> 		Value between 0.0 and 1.0	default=0.2"
+	@echo "	prop=<value>		Value between 0.0 and 1.0	default=0.7"
+	@echo "	tolerance=<value> 	Value between 0.0 and 1.0	default=0.0001"
+	@echo "	patience=<value>	Integer value max iterations	default=200"
+	@echo "	train=<file> 		Training file name		default=\"data/problema_real1.txt\""
+	@echo "	test=<file> 		Testing file name		default=\"data/problema_real1.txt\""
 	@echo "----------------------------------------------------"
 
 ejecuta_per:
 	@echo "----------------------------------------------------"
 	@echo "Executing Neural Network - Perceptron"
 	@echo "----------------------------------------------------"
-	python3 perceptron.py 
+	@python3 perceptron.py --alpha $(alpha) --data $(data) --umbral $(umbral) --prop $(prop) --tolerance $(tolerance) --patience $(patience) --train $(train) --test $(test) 
 
 # Adaline
 ayuda_ada:
 	@echo "----------------------------------------------------"
 	@echo "HELP Neural Network - Adaline"
+	@echo "	data=<value>		Value 1, 2, or 3, mode in which file is read	default=1"
+	@echo "	alpha=<value>		Value between 0.0 and 1.0	default=1"
+	@echo "	umbral=<value> 		Value between 0.0 and 1.0	default=0.2"
+	@echo "	prop=<value>		Value between 0.0 and 1.0	default=0.7"
+	@echo "	tolerance=<value> 	Value between 0.0 and 1.0	default=0.0001"
+	@echo "	patience=<value>	Integer value max iterations	default=200"
+	@echo "	train=<file> 		Training file name		default=\"data/problema_real1.txt\""
+	@echo "	test=<file> 		Testing file name		default=\"data/problema_real1.txt\""
 	@echo "----------------------------------------------------"
 
 ejecuta_ada:
 	@echo "----------------------------------------------------"
 	@echo "Executing Neural Network - Adaline"
 	@echo "----------------------------------------------------"
-	python3 adaline.py 
+	@python3 adaline.py --alpha $(alpha) --data $(data) --umbral $(umbral) --prop $(prop) --tolerance $(tolerance) --patience $(patience) --train $(train) --test $(test) 
+

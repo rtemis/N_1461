@@ -5,6 +5,9 @@ from data import Data
 import itertools
 import sys 
 from parser import parse
+from matplotlib import pyplot as plt
+import numpy as np
+from sklearn import metrics
 
 class Perceptron():
     # Configure the network with the structure:
@@ -116,6 +119,7 @@ class Perceptron():
         predict_correct = 0
         total = 0
         verbose = False
+
         # Compare predictions to values
         fp = open('prediccion_perceptron.txt', 'r')
         for i, line in enumerate(fp.readlines()):
@@ -133,7 +137,7 @@ class Perceptron():
         print('Correct Predictions:',predict_correct, 'Total predictions:',total)
         print('Accuracy:',predict_correct/total)
 
-        fp.close()          
+        fp.close()
 
 
 def main():
