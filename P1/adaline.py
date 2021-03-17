@@ -6,6 +6,7 @@ from parser import parse
 import itertools
 import numpy as np
 import sys
+from matplotlib import pyplot as plt
 
 
 class Adaline():
@@ -120,6 +121,16 @@ class Adaline():
 
         fp.close()   
 
+    def plot(self, filename):
+        plotx = []
+        ploty = []
+        for x, y in enumerate(self.ecm):
+            plotx.append(x)
+            ploty.append(y)
+        
+        plt.plot(plotx, ploty)
+        plt.savefig(filename)
+
 def main():
     # Create the data shelter object
     data = Data()
@@ -184,4 +195,5 @@ def main():
         adaline.test(weights=weights, test_in=t_in, test_out=t_out)
 
         adaline.accuracy(t_out)
+        adaline.plot('adaline_ecm_'+str(alpha)+'_'+str(umbral)+'.png')
 main()

@@ -139,6 +139,17 @@ class Perceptron():
 
         fp.close()
 
+    def plot(self, filename):
+        plotx = []
+        ploty = []
+        for x, y in enumerate(self.ecm):
+            plotx.append(x)
+            ploty.append(y)
+        
+        plt.plot(plotx, ploty)
+        plt.savefig(filename)
+
+
 
 def main():
     # Create the data shelter object
@@ -203,5 +214,7 @@ def main():
         perceptron.test(weights=weights, test_in=t_in, test_out=t_out)
 
         perceptron.accuracy(t_out)
+
+        perceptron.plot('perceptron_ecm_'+str(alpha)+'_'+str(umbral)+'.png') 
 
 main()
