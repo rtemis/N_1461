@@ -18,10 +18,10 @@ class PerceptronM():
                 self.weights[i].append([random.uniform(-1,1) for k in range(layers[i] + 1)])
 
     def sigmoid(self, value):
-        return ((2.0 / (1.0 + exp(-value))) - 1) if self.bipolar else (1.0 / (1 + exp(-value)))
+        return ((2.0 / (1.0 + exp(-round(value,4)))) - 1) if self.bipolar else (1.0 / (1 + exp(-round(value,4))))
 
     def sigmoidD(self, value):
-        return ((1.0 + value)*(1.0 - value)) / 2.0 if self.bipolar else (value * (1.0 - value))
+        return ((1.0 + round(value,4))*(1.0 - round(value,4))) / 2.0 if self.bipolar else (round(value,4) * (1.0 - round(value,4)))
 
     # b + Sum(wi * si) = y_in
     def activate(weights, source):
@@ -85,10 +85,36 @@ class PerceptronM():
             
             return [endLayerSig, d_in]
 
-    def train(self, train_in, train_out, epochs=5000, alpha=0.2, tolerance=0.0001):
+    def train(self, train_in, train_out, epochs=10, alpha=0.005, tolerance=0.0001):
         self.epochs = epochs
         self.alpha = alpha
+        
+        train_in = np.
+        #min = train_in[0][0]
+        #max = train_in[0][0]
+        #for r in train_in:
+        #    for c in r:
+        #        if c < min:
+        #            min = c
+        #        elif c > max:
+        #            max = c
 
+#        for r in train_in:
+#            for c in r:
+#                c = (c-min)/(max-min)
+#
+#        min = train_out[0][0]
+#        max = train_out[0][0]
+#        for r in train_out:
+#            for c in r:
+#                if c < min:
+#                    min = c
+#                elif c > max:
+#                    max = c
+#        for r in train_out:
+#            for c in r:
+#                c = (c-min)/(max-min)
+#
         ECMs = []
         for i in range(epochs):
             epochECM = 0
@@ -103,8 +129,8 @@ class PerceptronM():
 
 
 data = Data()
-p = PerceptronM([2, 5, 1])
-tr_in, tr_out = data.load_data_file('./data/and.txt')
+tr_in, tr_out = data.load_data_file('./data/problema_real6.txt')
+p = PerceptronM([data.attributes, 20, data.classes])
 ecms = p.train(tr_in, tr_out)
 print(p.exploit(tr_in[0]), tr_in[0], tr_out[0])
 pyplot.plot(ecms)
